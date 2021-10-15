@@ -1,0 +1,29 @@
+version: '3'
+services:
+
+  database:
+    image: mysql:5.7
+    networks:
+      sql_net:
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "db_name"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "123"
+
+  phpmyadmin:
+    depends_on:
+      - database
+    environment:
+      PMA_HOST: "database"
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8282:80'
+    networks:
+      sql_net:
+
+networks:
+  sql_net:
